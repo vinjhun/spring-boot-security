@@ -30,7 +30,6 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * Suppose to write Mapper Though
  */
-@CrossOrigin("*")
 @RestController
 @RequestMapping("auth")
 public class AuthController {
@@ -48,20 +47,20 @@ public class AuthController {
         return new ResponseEntity<>("1.0", HttpStatus.OK);
     }
     
-    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<String> login(HttpServletRequest req, @RequestBody(required = false) UserModel model) throws Throwable {
-        logger.info("=====> Auth Login");
-        if (!StringUtils.hasText(model.getUserName())) {
-            throw new BadCredentialsException("");
-        }
-
-        //User result = userRepo.findByUserName(model.getUserName()).orElse(null);
-        UserDetails user = userService.loadUserByUsername(model.getUserName());
-        Authentication authentication = new UsernamePasswordAuthenticationToken(user, "", user.getAuthorities());
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-
-        return new ResponseEntity<>("OK", HttpStatus.OK);
-    }
+//    @PostMapping(value = "/login", consumes = MediaType.APPLICATION_JSON_VALUE,
+//            produces = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<String> login(HttpServletRequest req, @RequestBody(required = false) UserModel model) throws Throwable {
+//        logger.info("=====> Auth Login");
+//        if (!StringUtils.hasText(model.getUserName())) {
+//            throw new BadCredentialsException("");
+//        }
+//
+//        //User result = userRepo.findByUserName(model.getUserName()).orElse(null);
+//        UserDetails user = userService.loadUserByUsername(model.getUserName());
+//        Authentication authentication = new UsernamePasswordAuthenticationToken(user, "", user.getAuthorities());
+//        SecurityContextHolder.getContext().setAuthentication(authentication);
+//
+//        return new ResponseEntity<>("OK", HttpStatus.OK);
+//    }
 
 }

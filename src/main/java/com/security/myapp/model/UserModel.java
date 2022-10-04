@@ -4,6 +4,7 @@
  */
 package com.security.myapp.model;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Data;
@@ -13,7 +14,7 @@ import lombok.Data;
  * @author user
  */
 @Data
-@JsonNaming(PropertyNamingStrategy.LowerCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.LowerCaseStrategy.class)
 public class UserModel {
     private String userName;
     private String password;

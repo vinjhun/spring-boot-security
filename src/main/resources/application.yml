@@ -1,4 +1,4 @@
-#trace: true
+trace: true
 
 ---
 
@@ -8,6 +8,7 @@ logging:
 ---
 
 server:
+  port: 8083
   servlet:
     context-path: /myapp/api
 
