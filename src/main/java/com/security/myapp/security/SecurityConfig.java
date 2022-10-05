@@ -74,7 +74,7 @@ public class SecurityConfig {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return customEncoder();
+        return new CustomEncoder();
     }
 
     @Bean
@@ -108,10 +108,10 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.httpBasic().and()
-                .csrf().csrfTokenRepository(this.getCsrfTokenRepository())
-                //.csrf().disable().cors().disable();
-                .and()
-                .cors().configurationSource(corsConfig());
+                //.csrf().csrfTokenRepository(this.getCsrfTokenRepository())
+                .csrf().disable().cors().disable();
+                //.and()
+                //.cors().configurationSource(corsConfig());
 
         http.authorizeHttpRequests(authorize ->
                         authorize.mvcMatchers("/auth/**").permitAll().anyRequest().authenticated())
@@ -120,6 +120,7 @@ public class SecurityConfig {
 
         http.sessionManagement()
                 .invalidSessionStrategy((req, res) -> {
+                    req.getSession(true);
                     //return post response
                     constructResponseBody(res);
                 })
@@ -136,20 +137,18 @@ public class SecurityConfig {
         return new SessionRegistryImpl();
     }
 
-    @Bean
-    public PasswordEncoder customEncoder() {
-        return new PasswordEncoder() {
-            @Override
-            public String encode(CharSequence rawPassword) {
-                return rawPassword.toString();
-            }
 
-            @Override
-            public boolean matches(CharSequence rawPassword, String encodedPassword) {
-                logger.info("Password Test {} {}", rawPassword, encodedPassword);
-                return true;
-            }
-        };
+    class CustomEncoder implements PasswordEncoder{
+
+        @Override
+        public String encode(CharSequence rawPassword) {
+            return rawPassword.toString();
+        }
+
+        @Override
+        public boolean matches(CharSequence rawPassword, String encodedPassword) {
+            return true;
+        }
     }
 
     protected SessionInformationExpiredStrategy responseExpiredStrategy() {

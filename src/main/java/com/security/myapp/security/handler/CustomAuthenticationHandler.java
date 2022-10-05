@@ -57,7 +57,7 @@ public class CustomAuthenticationHandler extends UsernamePasswordAuthenticationF
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response) throws AuthenticationException {
         try {
             String requestBody = IOUtils.toString(request.getReader());
-            ObjectNode node = mapper.convertValue(requestBody, ObjectNode.class);
+            ObjectNode node = mapper.readValue(requestBody, ObjectNode.class);
 
             if (node == null) {
                 throw new BadCredentialsException("Unrecognized format of request body");
