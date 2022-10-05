@@ -30,8 +30,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
  */
 public class CustomAuthenticationHandler extends UsernamePasswordAuthenticationFilter {
 
-    private static Logger logger = LoggerFactory.getLogger(CustomAuthenticationHandler.class);
-    private static ObjectMapper mapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    private static final Logger logger = LoggerFactory.getLogger(CustomAuthenticationHandler.class);
+    private static final ObjectMapper mapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
 
     @Autowired
     @Override

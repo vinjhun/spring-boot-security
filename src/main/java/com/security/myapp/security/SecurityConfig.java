@@ -65,7 +65,7 @@ public class SecurityConfig {
     @Autowired
     private CustomAuthFailureHandler failureHandler;
 
-    ObjectMapper mapper = Jackson2ObjectMapperBuilder.json()
+    final ObjectMapper mapper = Jackson2ObjectMapperBuilder.json()
             .serializationInclusion(JsonInclude.Include.NON_NULL)
             .featuresToDisable(DeserializationFeature.ADJUST_DATES_TO_CONTEXT_TIME_ZONE)
             .build();
@@ -138,7 +138,7 @@ public class SecurityConfig {
     }
 
 
-    class CustomEncoder implements PasswordEncoder{
+    static class CustomEncoder implements PasswordEncoder{
 
         @Override
         public String encode(CharSequence rawPassword) {
@@ -152,12 +152,9 @@ public class SecurityConfig {
     }
 
     protected SessionInformationExpiredStrategy responseExpiredStrategy() {
-        return new SessionInformationExpiredStrategy() {
-            @Override
-            public void onExpiredSessionDetected(SessionInformationExpiredEvent event) throws IOException, ServletException {
-                HttpServletResponse response = event.getResponse();
-                constructResponseBody(response);
-            }
+        return event -> {
+            HttpServletResponse response = event.getResponse();
+            constructResponseBody(response);
         };
     }
 

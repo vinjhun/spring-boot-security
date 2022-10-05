@@ -22,9 +22,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomAuthFailureHandler extends SimpleUrlAuthenticationFailureHandler {
 
-    Logger logger = LoggerFactory.getLogger(CustomAuthFailureHandler.class);
+    final Logger logger = LoggerFactory.getLogger(CustomAuthFailureHandler.class);
     @Override
-    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
+    public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) {
         logger.info("On Authentication Failure");
         if (!response.isCommitted()) {
             

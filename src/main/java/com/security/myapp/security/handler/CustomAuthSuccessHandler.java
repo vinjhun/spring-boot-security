@@ -24,12 +24,12 @@ import org.springframework.stereotype.Component;
 @Component
 public class CustomAuthSuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
 
-    Logger logger = LoggerFactory.getLogger(CustomAuthenticationHandler.class);
+    final Logger logger = LoggerFactory.getLogger(CustomAuthenticationHandler.class);
 
-    private static ObjectMapper mapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
+    private static final ObjectMapper mapper = new ObjectMapper().setSerializationInclusion(JsonInclude.Include.NON_NULL);
     
     @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) {
         logger.info("On Authentication Successful");
     
     }
